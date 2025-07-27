@@ -1,0 +1,42 @@
+{
+  "cart": {
+    "lines": [
+      {
+        "id": "gid://shopify/CartLine/1",
+        "quantity": 2,
+        "merchandise": {
+          "id": "gid://shopify/ProductVariant/1",
+          "title": "Small",
+          "product": {
+            "id": "gid://shopify/Product/1",
+            "title": "T-Shirt"
+          }
+        }
+      },
+      {
+        "id": "gid://shopify/CartLine/2",
+        "quantity": 5,
+        "merchandise": {
+          "id": "gid://shopify/ProductVariant/2",
+          "title": "Medium",
+          "product": {
+            "id": "gid://shopify/Product/2",
+            "title": "Hoodie"
+          }
+        }
+      },
+      {
+        "id": "gid://shopify/CartLine/3",
+        "quantity": 1,
+        "merchandise": {
+          "id": "gid://shopify/ProductVariant/3",
+          "title": "Large",
+          "product": {
+            "id": "gid://shopify/Product/3",
+            "title": "Jacket"
+          }
+        }
+      }
+    ]
+  }
+} 

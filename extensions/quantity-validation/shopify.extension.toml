@@ -1,0 +1,16 @@
+api_version = "2025-07"
+
+[[extensions]]
+name = "quantity-validation"
+handle = "quantity-validation-function"
+type = "function"
+
+[[extensions.targeting]]
+target = "purchase.validation.run"
+input_query = "src/run.graphql"
+export = "run"
+
+[extensions.build]
+command = "cargo build --target=wasm32-wasip1 --release"
+path = "target/wasm32-wasip1/release/quantity_validation_function.wasm"
+watch = ["src/**/*.rs", "Cargo.toml"] 

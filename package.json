@@ -1,0 +1,17 @@
+{
+  "name": "quantity-validation-app",
+  "version": "1.0.0",
+  "description": "Shopify app with quantity validation function",
+  "scripts": {
+    "build": "cd extensions/quantity-validation && cargo build --target=wasm32-wasip1 --release",
+    "deploy": "shopify app deploy",
+    "web:build": "echo 'Static site ready'",
+    "web:serve": "cd public && python3 -m http.server 3000"
+  },
+  "keywords": ["shopify", "function", "validation", "quantity"],
+  "author": "",
+  "license": "MIT",
+  "devDependencies": {
+    "@shopify/cli": "^3.0.0"
+  }
+}
