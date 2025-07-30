@@ -41,6 +41,11 @@
   to = "/.netlify/functions/get-threshold"
   status = 200
 
+[[redirects]]
+  from = "/debug-threshold"
+  to = "/.netlify/functions/debug-threshold"
+  status = 200
+
 # Main app route
 [[redirects]]
   from = "/"

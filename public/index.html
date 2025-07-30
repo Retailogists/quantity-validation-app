@@ -251,7 +251,7 @@
                     // Decode the access token
                     const accessToken = atob(tokenParam);
                     
-                    const response = await fetch('/set-threshold', {
+                    const response = await fetch('/debug-threshold', {
                         method: 'POST',
                         headers: {
                             'Content-Type': 'application/json',
