@@ -5,12 +5,18 @@ use std::collections::HashMap;
 #[derive(Deserialize)]
 struct Input {
     buyerJourney: BuyerJourney,
+    shop: Shop,
     cart: Cart,
 }
 
 #[derive(Deserialize)]
 struct BuyerJourney {
     step: Option<String>,
+}
+
+#[derive(Deserialize)]
+struct Shop {
+    thresholdMetafield: Option<Metafield>,
 }
 
 #[derive(Deserialize)]
@@ -44,7 +50,7 @@ struct Metafield {
     value: Option<String>,
 }
 
-const MINIMUM_QUANTITY: i32 = 3;
+const DEFAULT_MINIMUM_QUANTITY: i32 = 3;
 
 // Function for purchase validation (works for both cart checkout and direct checkout)
 #[shopify_function]
@@ -54,6 +60,19 @@ fn run(input: Input) -> Result<HashMap<String, Vec<HashMap<String, String>>>> {
     eprintln!("DEBUG: Cart has {} lines", input.cart.lines.len());
 
     let mut errors = Vec::new();
+
+    // Get minimum quantity threshold from shop metafield, fallback to default
+    let minimum_quantity = if let Some(threshold_metafield) = &input.shop.thresholdMetafield {
+        if let Some(threshold_value) = &threshold_metafield.value {
+            threshold_value.parse::<i32>().unwrap_or(DEFAULT_MINIMUM_QUANTITY)
+        } else {
+            DEFAULT_MINIMUM_QUANTITY
+        }
+    } else {
+        DEFAULT_MINIMUM_QUANTITY
+    };
+
+    eprintln!("DEBUG: Using minimum quantity threshold: {}", minimum_quantity);
 
     // Determine if this is a checkout context
     let is_checkout = input.buyerJourney.step.as_ref()
@@ -79,10 +98,10 @@ fn run(input: Input) -> Result<HashMap<String, Vec<HashMap<String, String>>>> {
                 0
             };
 
-            eprintln!("DEBUG: Available inventory: {}, Minimum required: {}", inventory_available, MINIMUM_QUANTITY);
+                            eprintln!("DEBUG: Available inventory: {}, Minimum required: {}", inventory_available, minimum_quantity);
 
-            // Validate inventory with context-appropriate message
-            if inventory_available > 0 && inventory_available < MINIMUM_QUANTITY {
+                // Validate inventory with context-appropriate message
+                if inventory_available > 0 && inventory_available < minimum_quantity {
                 let error_message = if is_checkout {
                     // Specific product name for checkout
                     let product_name = merchandise.product.as_ref()
@@ -117,10 +136,10 @@ fn run(input: Input) -> Result<HashMap<String, Vec<HashMap<String, String>>>> {
                 errors.push(error);
             } else if inventory_available == 0 {
                 eprintln!("DEBUG: No inventory data - allowing purchase");
-            } else {
-                eprintln!("DEBUG: Sufficient inventory ({} >= {}) - allowing purchase", 
-                    inventory_available, MINIMUM_QUANTITY);
-            }
+                            } else {
+                    eprintln!("DEBUG: Sufficient inventory ({} >= {}) - allowing purchase", 
+                        inventory_available, minimum_quantity);
+                }
         }
     }
 

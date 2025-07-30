@@ -2,6 +2,12 @@ query RunInput {
   buyerJourney {
     step
   }
+  shop {
+    # Get the minimum quantity threshold from shop metafield
+    thresholdMetafield: metafield(namespace: "custom", key: "minimum_quantity_threshold") {
+      value
+    }
+  }
   cart {
     lines {
       id

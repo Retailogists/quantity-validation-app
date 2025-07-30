@@ -109,10 +109,45 @@
             <p>Shopify Flow automatically updates inventory metafields in real-time.</p>
         </div>
         
-        <div class="feature">
-            <h3>🎯 Zero Human Interaction</h3>
-            <p>Fully automated - no manual setup or maintenance required!</p>
-        </div>
+                    <div class="feature">
+                <h3>🎯 Zero Human Interaction</h3>
+                <p>Fully automated - no manual setup or maintenance required!</p>
+            </div>
+            
+            <!-- Threshold Configuration (shown when accessed via Shopify admin) -->
+            <div id="threshold-config" style="display: none;">
+                <div class="feature">
+                    <h3>⚙️ Configuration</h3>
+                    <p>Set the minimum quantity threshold for validation:</p>
+                    
+                    <div style="margin: 1rem 0;">
+                        <label for="threshold-input" style="display: block; margin-bottom: 0.5rem; font-weight: bold;">
+                            Minimum Quantity Threshold:
+                        </label>
+                        <input 
+                            type="number" 
+                            id="threshold-input" 
+                            min="1" 
+                            max="100" 
+                            value="3" 
+                            style="padding: 0.5rem; border: 1px solid #ccc; border-radius: 4px; width: 100px;"
+                        >
+                        <button 
+                            id="save-threshold" 
+                            class="btn" 
+                            style="margin-left: 1rem; padding: 0.5rem 1rem; font-size: 0.9rem;"
+                        >
+                            Save Threshold
+                        </button>
+                    </div>
+                    
+                    <div id="threshold-status" style="margin-top: 0.5rem; font-size: 0.9rem;"></div>
+                    
+                    <p style="font-size: 0.85rem; color: #666; margin-top: 0.5rem;">
+                        This sets the minimum quantity required for each item during checkout validation.
+                    </p>
+                </div>
+            </div>
         
         <h3>Current Setup Status:</h3>
         <ul>
@@ -147,6 +182,7 @@
             document.getElementById('shop-info').style.display = 'block';
             document.getElementById('shop-name').textContent = shop;
             document.getElementById('install-info').style.display = 'none';
+            document.getElementById('threshold-config').style.display = 'block';
             
             // Initialize App Bridge for embedded app
             if (window.shopifyAppBridge && host) {
@@ -157,6 +193,9 @@
                         forceRedirect: true,
                     });
                     console.log('App Bridge initialized for shop:', shop);
+                    
+                    // Handle threshold configuration
+                    setupThresholdConfig(shop, app);
                 } catch (error) {
                     console.error('App Bridge initialization failed:', error);
                 }
@@ -177,6 +216,70 @@
             .catch(error => {
                 console.log('Health check failed (expected for direct access):', error);
             });
+        
+        // Threshold configuration functionality
+        function setupThresholdConfig(shop, app) {
+            const thresholdInput = document.getElementById('threshold-input');
+            const saveButton = document.getElementById('save-threshold');
+            const statusDiv = document.getElementById('threshold-status');
+            
+            // Load current threshold (you could fetch this from a metafield)
+            // For now, we'll use the default value of 3
+            
+            saveButton.addEventListener('click', async function() {
+                const threshold = thresholdInput.value;
+                
+                if (!threshold || threshold < 1) {
+                    showStatus('Please enter a valid threshold (minimum 1)', 'error');
+                    return;
+                }
+                
+                saveButton.disabled = true;
+                saveButton.textContent = 'Saving...';
+                showStatus('Saving threshold...', 'info');
+                
+                try {
+                    // Note: In a real implementation, you'd need an access token
+                    // For now, we'll simulate the save
+                    const response = await fetch('/set-threshold', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify({
+                            shop: shop,
+                            threshold: threshold,
+                            // In production, you'd get this from the OAuth flow
+                            accessToken: 'simulated_token'
+                        })
+                    });
+                    
+                    if (response.ok) {
+                        showStatus(`Threshold set to ${threshold} successfully!`, 'success');
+                    } else {
+                        const error = await response.json();
+                        showStatus(`Error: ${error.error}`, 'error');
+                    }
+                } catch (error) {
+                    console.error('Failed to save threshold:', error);
+                    showStatus('Failed to save threshold. Please try again.', 'error');
+                }
+                
+                saveButton.disabled = false;
+                saveButton.textContent = 'Save Threshold';
+            });
+            
+            function showStatus(message, type) {
+                statusDiv.textContent = message;
+                statusDiv.style.color = type === 'success' ? '#4CAF50' : 
+                                      type === 'error' ? '#f44336' : '#2196f3';
+                
+                // Clear status after 5 seconds
+                setTimeout(() => {
+                    statusDiv.textContent = '';
+                }, 5000);
+            }
+        }
     </script>
 </body>
 </html> 
