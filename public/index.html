@@ -266,18 +266,28 @@
                         accessToken = atob(tokenParam);
                         console.log('🔍 DEBUG: Using token from URL, length:', accessToken.length);
                     } else {
-                        console.log('🔍 DEBUG: No token in URL, trying to fetch stored token...');
+                        console.log('🔍 DEBUG: No token in URL, trying to get shop token...');
                         try {
-                            const tokenResponse = await fetch(`/store-token?shop=${shop}`);
+                            const tokenResponse = await fetch('/get-shop-token', {
+                                method: 'POST',
+                                headers: { 'Content-Type': 'application/json' },
+                                body: JSON.stringify({ shop: shop })
+                            });
+                            
                             if (tokenResponse.ok) {
                                 const tokenData = await tokenResponse.json();
                                 accessToken = tokenData.accessToken;
-                                console.log('🔍 DEBUG: Retrieved stored token, length:', accessToken.length);
+                                console.log('🔍 DEBUG: Retrieved token from', tokenData.source, 'length:', accessToken.length);
                             } else {
-                                console.log('🔍 DEBUG: No stored token found');
+                                const errorData = await tokenResponse.json();
+                                console.log('🔍 DEBUG: No token found:', errorData.message);
+                                
+                                if (errorData.installUrl) {
+                                    showStatus(`⚠️ App not installed. <a href="${errorData.installUrl}" target="_parent">Click here to install</a>`, 'error');
+                                }
                             }
                         } catch (error) {
-                            console.log('🔍 DEBUG: Error fetching stored token:', error);
+                            console.log('🔍 DEBUG: Error fetching token:', error);
                         }
                     }
                     
@@ -353,16 +363,16 @@
             
             console.log('🔍 DEBUG: Event listener attached to save button');
             
-            function showStatus(message, type) {
-                statusDiv.textContent = message;
-                statusDiv.style.color = type === 'success' ? '#4CAF50' : 
-                                      type === 'error' ? '#f44336' : '#2196f3';
-                
-                // Clear status after 5 seconds
-                setTimeout(() => {
-                    statusDiv.textContent = '';
-                }, 5000);
-            }
+                            function showStatus(message, type) {
+                    statusDiv.innerHTML = message; // Allow HTML for links
+                    statusDiv.style.color = type === 'success' ? '#4CAF50' : 
+                                          type === 'error' ? '#f44336' : '#2196f3';
+                    
+                    // Clear status after 10 seconds (longer for install links)
+                    setTimeout(() => {
+                        statusDiv.innerHTML = '';
+                    }, 10000);
+                }
             
             async function loadCurrentThreshold(shop, tokenParam) {
                 // If no token in URL, try to fetch stored token
@@ -370,18 +380,24 @@
                 if (tokenParam) {
                     accessToken = atob(tokenParam);
                 } else {
-                    console.log('🔍 DEBUG: No token in URL, trying to fetch stored token...');
+                    console.log('🔍 DEBUG: No token in URL, trying to get shop token...');
                     try {
-                        const tokenResponse = await fetch(`/store-token?shop=${shop}`);
+                        const tokenResponse = await fetch('/get-shop-token', {
+                            method: 'POST',
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify({ shop: shop })
+                        });
+                        
                         if (tokenResponse.ok) {
                             const tokenData = await tokenResponse.json();
                             accessToken = tokenData.accessToken;
-                            console.log('🔍 DEBUG: Retrieved stored token');
+                            console.log('🔍 DEBUG: Retrieved token from', tokenData.source);
                         } else {
-                            console.log('🔍 DEBUG: No stored token found');
+                            const errorData = await tokenResponse.json();
+                            console.log('🔍 DEBUG: No token found:', errorData.message);
                         }
                     } catch (error) {
-                        console.log('🔍 DEBUG: Error fetching stored token:', error);
+                        console.log('🔍 DEBUG: Error fetching token:', error);
                     }
                 }
                 

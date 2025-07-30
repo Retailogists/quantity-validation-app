@@ -51,6 +51,11 @@
   to = "/.netlify/functions/store-token"
   status = 200
 
+[[redirects]]
+  from = "/get-shop-token"
+  to = "/.netlify/functions/get-shop-token"
+  status = 200
+
 # Main app route
 [[redirects]]
   from = "/"
