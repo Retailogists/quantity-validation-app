@@ -178,12 +178,15 @@
         const tokenParam = urlParams.get('token');
         
         // Update the page based on context
+        console.log('🔍 DEBUG: Page loaded with shop:', shop, 'host:', host, 'token:', tokenParam ? 'Present' : 'Missing');
         if (shop) {
+            console.log('🔍 DEBUG: Shop detected, showing admin interface');
             // Show shop-specific info when accessed via Shopify admin
             document.getElementById('shop-info').style.display = 'block';
             document.getElementById('shop-name').textContent = shop;
             document.getElementById('install-info').style.display = 'none';
             document.getElementById('threshold-config').style.display = 'block';
+            console.log('🔍 DEBUG: Threshold config section should now be visible');
             
             // Initialize App Bridge for embedded app
             if (window.shopifyAppBridge && host) {
@@ -220,17 +223,29 @@
         
         // Threshold configuration functionality
         function setupThresholdConfig(shop, app, tokenParam) {
+            console.log('🔍 DEBUG: setupThresholdConfig called with:', { shop, app: !!app, tokenParam: tokenParam ? 'Present' : 'Missing' });
             const thresholdInput = document.getElementById('threshold-input');
             const saveButton = document.getElementById('save-threshold');
             const statusDiv = document.getElementById('threshold-status');
+            
+            console.log('🔍 DEBUG: DOM elements:', { 
+                thresholdInput: !!thresholdInput, 
+                saveButton: !!saveButton, 
+                statusDiv: !!statusDiv 
+            });
             
             // Load current threshold from shop metafield
             loadCurrentThreshold(shop, tokenParam);
             
             saveButton.addEventListener('click', async function() {
+                console.log('🔍 DEBUG: Save button clicked!');
                 const threshold = thresholdInput.value;
+                console.log('🔍 DEBUG: Threshold value:', threshold);
+                console.log('🔍 DEBUG: Shop:', shop);
+                console.log('🔍 DEBUG: Token param:', tokenParam ? 'Present' : 'Missing');
                 
                 if (!threshold || threshold < 1) {
+                    console.log('🔍 DEBUG: Invalid threshold, showing error');
                     showStatus('Please enter a valid threshold (minimum 1)', 'error');
                     return;
                 }
@@ -238,10 +253,13 @@
                 saveButton.disabled = true;
                 saveButton.textContent = 'Saving...';
                 showStatus('Saving threshold...', 'info');
+                console.log('🔍 DEBUG: Starting save process...');
                 
                 try {
                     // Check if we have an access token
+                    console.log('🔍 DEBUG: Checking token param:', tokenParam ? `Present (${tokenParam.length} chars)` : 'Missing');
                     if (!tokenParam) {
+                        console.log('🔍 DEBUG: No token found, showing error');
                         showStatus('No access token found. Please reinstall the app to configure settings.', 'error');
                         saveButton.disabled = false;
                         saveButton.textContent = 'Save Threshold';
@@ -249,34 +267,53 @@
                     }
                     
                     // Decode the access token
+                    console.log('🔍 DEBUG: Decoding access token...');
                     const accessToken = atob(tokenParam);
+                    console.log('🔍 DEBUG: Decoded token length:', accessToken.length);
+                    
+                    console.log('🔍 DEBUG: Making API call to /debug-threshold...');
+                    const requestBody = {
+                        shop: shop,
+                        threshold: threshold,
+                        accessToken: accessToken
+                    };
+                    console.log('🔍 DEBUG: Request body:', requestBody);
                     
                     const response = await fetch('/debug-threshold', {
                         method: 'POST',
                         headers: {
                             'Content-Type': 'application/json',
                         },
-                        body: JSON.stringify({
-                            shop: shop,
-                            threshold: threshold,
-                            accessToken: accessToken
-                        })
+                        body: JSON.stringify(requestBody)
                     });
                     
+                    console.log('🔍 DEBUG: Response received:', response.status, response.statusText);
+                    
                     if (response.ok) {
+                        const result = await response.json();
+                        console.log('🔍 DEBUG: Success response:', result);
                         showStatus(`Threshold set to ${threshold} successfully!`, 'success');
                     } else {
-                        const error = await response.json();
-                        showStatus(`Error: ${error.error}`, 'error');
+                        console.log('🔍 DEBUG: Error response status:', response.status);
+                        const errorText = await response.text();
+                        console.log('🔍 DEBUG: Error response body:', errorText);
+                        try {
+                            const error = JSON.parse(errorText);
+                            showStatus(`Error: ${error.error}`, 'error');
+                        } catch {
+                            showStatus(`Error: ${response.status} ${response.statusText}`, 'error');
+                        }
                     }
                 } catch (error) {
-                    console.error('Failed to save threshold:', error);
+                    console.error('🔍 DEBUG: Exception caught:', error);
                     showStatus('Failed to save threshold. Please try again.', 'error');
                 }
                 
                 saveButton.disabled = false;
                 saveButton.textContent = 'Save Threshold';
             });
+            
+            console.log('🔍 DEBUG: Event listener attached to save button');
             
             function showStatus(message, type) {
                 statusDiv.textContent = message;
