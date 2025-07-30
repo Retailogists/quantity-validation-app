@@ -40,8 +40,23 @@ export const handler = async (event, context) => {
     });
     
     if (tokenData.access_token) {
-      // Store access token (in production, store in database)
+      // Store access token for future use
       console.log(`App installed for shop: ${shop}`);
+      
+      try {
+        // Store the token
+        await fetch(`${process.env.URL || 'https://quanvalapp.netlify.app'}/store-token`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            shop: shop,
+            accessToken: tokenData.access_token
+          })
+        });
+        console.log('🔍 DEBUG: Token stored successfully');
+      } catch (error) {
+        console.error('🔍 DEBUG: Failed to store token:', error);
+      }
       
       // Redirect to app interface with access token (base64 encoded for security)
       const tokenParam = Buffer.from(tokenData.access_token).toString('base64');

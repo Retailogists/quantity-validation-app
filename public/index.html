@@ -258,10 +258,31 @@
                 console.log('🔍 DEBUG: Starting save process...');
                 
                 try {
-                    // Check if we have an access token
+                    // Get access token (from URL or stored)
                     console.log('🔍 DEBUG: Checking token param:', tokenParam ? `Present (${tokenParam.length} chars)` : 'Missing');
-                    if (!tokenParam) {
-                        console.log('🔍 DEBUG: No token found, simulating for testing');
+                    let accessToken = null;
+                    
+                    if (tokenParam) {
+                        accessToken = atob(tokenParam);
+                        console.log('🔍 DEBUG: Using token from URL, length:', accessToken.length);
+                    } else {
+                        console.log('🔍 DEBUG: No token in URL, trying to fetch stored token...');
+                        try {
+                            const tokenResponse = await fetch(`/store-token?shop=${shop}`);
+                            if (tokenResponse.ok) {
+                                const tokenData = await tokenResponse.json();
+                                accessToken = tokenData.accessToken;
+                                console.log('🔍 DEBUG: Retrieved stored token, length:', accessToken.length);
+                            } else {
+                                console.log('🔍 DEBUG: No stored token found');
+                            }
+                        } catch (error) {
+                            console.log('🔍 DEBUG: Error fetching stored token:', error);
+                        }
+                    }
+                    
+                    if (!accessToken) {
+                        console.log('🔍 DEBUG: No access token available, simulating for testing');
                         showStatus('⚠️ Testing mode: No access token (would normally fail)', 'error');
                         
                         // For debugging, let's simulate the API call anyway
@@ -287,11 +308,6 @@
                         saveButton.textContent = 'Save Threshold';
                         return;
                     }
-                    
-                    // Decode the access token
-                    console.log('🔍 DEBUG: Decoding access token...');
-                    const accessToken = atob(tokenParam);
-                    console.log('🔍 DEBUG: Decoded token length:', accessToken.length);
                     
                     console.log('🔍 DEBUG: Making API call to /debug-threshold...');
                     const requestBody = {
@@ -349,13 +365,32 @@
             }
             
             async function loadCurrentThreshold(shop, tokenParam) {
-                if (!tokenParam) {
-                    showStatus('Using default threshold (3). Install app to configure.', 'info');
+                // If no token in URL, try to fetch stored token
+                let accessToken = null;
+                if (tokenParam) {
+                    accessToken = atob(tokenParam);
+                } else {
+                    console.log('🔍 DEBUG: No token in URL, trying to fetch stored token...');
+                    try {
+                        const tokenResponse = await fetch(`/store-token?shop=${shop}`);
+                        if (tokenResponse.ok) {
+                            const tokenData = await tokenResponse.json();
+                            accessToken = tokenData.accessToken;
+                            console.log('🔍 DEBUG: Retrieved stored token');
+                        } else {
+                            console.log('🔍 DEBUG: No stored token found');
+                        }
+                    } catch (error) {
+                        console.log('🔍 DEBUG: Error fetching stored token:', error);
+                    }
+                }
+                
+                if (!accessToken) {
+                    showStatus('Using default threshold (3). Need to reinstall app to configure.', 'info');
                     return;
                 }
                 
                 try {
-                    const accessToken = atob(tokenParam);
                     const response = await fetch('/get-threshold', {
                         method: 'POST',
                         headers: {

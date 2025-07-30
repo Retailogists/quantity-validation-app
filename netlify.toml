@@ -46,6 +46,11 @@
   to = "/.netlify/functions/debug-threshold"
   status = 200
 
+[[redirects]]
+  from = "/store-token"
+  to = "/.netlify/functions/store-token"
+  status = 200
+
 # Main app route
 [[redirects]]
   from = "/"
