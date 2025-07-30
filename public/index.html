@@ -175,6 +175,7 @@
         const urlParams = new URLSearchParams(window.location.search);
         const shop = urlParams.get('shop');
         const host = urlParams.get('host');
+        const tokenParam = urlParams.get('token');
         
         // Update the page based on context
         if (shop) {
@@ -195,7 +196,7 @@
                     console.log('App Bridge initialized for shop:', shop);
                     
                     // Handle threshold configuration
-                    setupThresholdConfig(shop, app);
+                    setupThresholdConfig(shop, app, tokenParam);
                 } catch (error) {
                     console.error('App Bridge initialization failed:', error);
                 }
@@ -218,13 +219,13 @@
             });
         
         // Threshold configuration functionality
-        function setupThresholdConfig(shop, app) {
+        function setupThresholdConfig(shop, app, tokenParam) {
             const thresholdInput = document.getElementById('threshold-input');
             const saveButton = document.getElementById('save-threshold');
             const statusDiv = document.getElementById('threshold-status');
             
-            // Load current threshold (you could fetch this from a metafield)
-            // For now, we'll use the default value of 3
+            // Load current threshold from shop metafield
+            loadCurrentThreshold(shop, tokenParam);
             
             saveButton.addEventListener('click', async function() {
                 const threshold = thresholdInput.value;
@@ -239,8 +240,17 @@
                 showStatus('Saving threshold...', 'info');
                 
                 try {
-                    // Note: In a real implementation, you'd need an access token
-                    // For now, we'll simulate the save
+                    // Check if we have an access token
+                    if (!tokenParam) {
+                        showStatus('No access token found. Please reinstall the app to configure settings.', 'error');
+                        saveButton.disabled = false;
+                        saveButton.textContent = 'Save Threshold';
+                        return;
+                    }
+                    
+                    // Decode the access token
+                    const accessToken = atob(tokenParam);
+                    
                     const response = await fetch('/set-threshold', {
                         method: 'POST',
                         headers: {
@@ -249,8 +259,7 @@
                         body: JSON.stringify({
                             shop: shop,
                             threshold: threshold,
-                            // In production, you'd get this from the OAuth flow
-                            accessToken: 'simulated_token'
+                            accessToken: accessToken
                         })
                     });
                     
@@ -278,6 +287,44 @@
                 setTimeout(() => {
                     statusDiv.textContent = '';
                 }, 5000);
+            }
+            
+            async function loadCurrentThreshold(shop, tokenParam) {
+                if (!tokenParam) {
+                    showStatus('Using default threshold (3). Install app to configure.', 'info');
+                    return;
+                }
+                
+                try {
+                    const accessToken = atob(tokenParam);
+                    const response = await fetch('/get-threshold', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify({
+                            shop: shop,
+                            accessToken: accessToken
+                        })
+                    });
+                    
+                    if (response.ok) {
+                        const data = await response.json();
+                        thresholdInput.value = data.threshold;
+                        
+                        if (data.isDefault) {
+                            showStatus(`Using default threshold (${data.threshold}). You can change it below.`, 'info');
+                        } else {
+                            showStatus(`Current threshold: ${data.threshold}`, 'success');
+                        }
+                    } else {
+                        console.error('Failed to load threshold');
+                        showStatus('Could not load current threshold. Using default (3).', 'error');
+                    }
+                } catch (error) {
+                    console.error('Error loading threshold:', error);
+                    showStatus('Error loading current threshold. Using default (3).', 'error');
+                }
             }
         }
     </script>

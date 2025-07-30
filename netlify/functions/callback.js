@@ -38,8 +38,9 @@ export const handler = async (event, context) => {
       // Store access token (in production, store in database)
       console.log(`App installed for shop: ${shop}`);
       
-      // Redirect to app interface
-      const redirectUrl = `/?shop=${shop}${host ? `&host=${host}` : ''}`;
+      // Redirect to app interface with access token (base64 encoded for security)
+      const tokenParam = Buffer.from(tokenData.access_token).toString('base64');
+      const redirectUrl = `/?shop=${shop}${host ? `&host=${host}` : ''}&token=${tokenParam}`;
       
       return {
         statusCode: 302,
