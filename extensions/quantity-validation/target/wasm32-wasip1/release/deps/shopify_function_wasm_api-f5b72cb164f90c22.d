@@ -1,0 +1,9 @@
+/Users/ziaddarwich/Sites/retailogists/quantity-validation-app/extensions/quantity-validation/target/wasm32-wasip1/release/deps/shopify_function_wasm_api-f5b72cb164f90c22.d: /Users/ziaddarwich/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/shopify_function_wasm_api-0.2.0/src/lib.rs /Users/ziaddarwich/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/shopify_function_wasm_api-0.2.0/src/read.rs /Users/ziaddarwich/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/shopify_function_wasm_api-0.2.0/src/write.rs
+
+/Users/ziaddarwich/Sites/retailogists/quantity-validation-app/extensions/quantity-validation/target/wasm32-wasip1/release/deps/libshopify_function_wasm_api-f5b72cb164f90c22.rlib: /Users/ziaddarwich/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/shopify_function_wasm_api-0.2.0/src/lib.rs /Users/ziaddarwich/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/shopify_function_wasm_api-0.2.0/src/read.rs /Users/ziaddarwich/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/shopify_function_wasm_api-0.2.0/src/write.rs
+
+/Users/ziaddarwich/Sites/retailogists/quantity-validation-app/extensions/quantity-validation/target/wasm32-wasip1/release/deps/libshopify_function_wasm_api-f5b72cb164f90c22.rmeta: /Users/ziaddarwich/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/shopify_function_wasm_api-0.2.0/src/lib.rs /Users/ziaddarwich/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/shopify_function_wasm_api-0.2.0/src/read.rs /Users/ziaddarwich/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/shopify_function_wasm_api-0.2.0/src/write.rs
+
+/Users/ziaddarwich/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/shopify_function_wasm_api-0.2.0/src/lib.rs:
+/Users/ziaddarwich/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/shopify_function_wasm_api-0.2.0/src/read.rs:
+/Users/ziaddarwich/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/shopify_function_wasm_api-0.2.0/src/write.rs:

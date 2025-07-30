@@ -1,0 +1,1 @@
+/Users/ziaddarwich/Sites/retailogists/quantity-validation-app/extensions/quantity-validation/target/wasm32-wasip1/release/quantity_validation_function.wasm: /Users/ziaddarwich/Sites/retailogists/quantity-validation-app/extensions/quantity-validation/src/lib.rs

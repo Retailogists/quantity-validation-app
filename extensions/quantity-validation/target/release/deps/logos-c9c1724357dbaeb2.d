@@ -1,0 +1,10 @@
+/Users/ziaddarwich/Sites/retailogists/quantity-validation-app/extensions/quantity-validation/target/release/deps/logos-c9c1724357dbaeb2.d: /Users/ziaddarwich/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/logos-0.15.0/src/lib.rs /Users/ziaddarwich/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/logos-0.15.0/src/lexer.rs /Users/ziaddarwich/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/logos-0.15.0/src/source.rs /Users/ziaddarwich/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/logos-0.15.0/src/internal.rs
+
+/Users/ziaddarwich/Sites/retailogists/quantity-validation-app/extensions/quantity-validation/target/release/deps/liblogos-c9c1724357dbaeb2.rlib: /Users/ziaddarwich/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/logos-0.15.0/src/lib.rs /Users/ziaddarwich/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/logos-0.15.0/src/lexer.rs /Users/ziaddarwich/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/logos-0.15.0/src/source.rs /Users/ziaddarwich/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/logos-0.15.0/src/internal.rs
+
+/Users/ziaddarwich/Sites/retailogists/quantity-validation-app/extensions/quantity-validation/target/release/deps/liblogos-c9c1724357dbaeb2.rmeta: /Users/ziaddarwich/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/logos-0.15.0/src/lib.rs /Users/ziaddarwich/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/logos-0.15.0/src/lexer.rs /Users/ziaddarwich/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/logos-0.15.0/src/source.rs /Users/ziaddarwich/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/logos-0.15.0/src/internal.rs
+
+/Users/ziaddarwich/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/logos-0.15.0/src/lib.rs:
+/Users/ziaddarwich/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/logos-0.15.0/src/lexer.rs:
+/Users/ziaddarwich/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/logos-0.15.0/src/source.rs:
+/Users/ziaddarwich/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/logos-0.15.0/src/internal.rs:

@@ -1,0 +1,1 @@
+{"cart":{"lines":[{"id":"test","quantity":1,"merchandise":{"id":"test-variant","title":"Test","inventoryMetafield1":{"value":"1"},"inventoryMetafield2":null,"inventoryMetafield3":null,"product":{"id":"test-product","title":"Test Product"}}}]}}

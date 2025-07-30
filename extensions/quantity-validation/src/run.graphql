@@ -1,4 +1,7 @@
 query RunInput {
+  buyerJourney {
+    step
+  }
   cart {
     lines {
       id
@@ -7,6 +10,10 @@ query RunInput {
         ... on ProductVariant {
           id
           title
+          # Use the metafield format that was working in the logs
+          inventoryMetafield: metafield(namespace: "custom", key: "inventory") {
+            value
+          }
           product {
             id
             title

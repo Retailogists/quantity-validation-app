@@ -1,17 +1,24 @@
 {
   "name": "quantity-validation-app",
   "version": "1.0.0",
-  "description": "Shopify app with quantity validation function",
+  "type": "module",
   "scripts": {
-    "build": "cd extensions/quantity-validation && cargo build --target=wasm32-wasip1 --release",
+    "setup": "node scripts/setup.js",
+    "setup-metafields": "node scripts/setup-metafields.js",
+    "build": "shopify app build",
+    "dev": "shopify app dev",
+    "info": "shopify app info",
+    "scaffold": "shopify app scaffold",
     "deploy": "shopify app deploy",
-    "web:build": "echo 'Static site ready'",
-    "web:serve": "cd public && python3 -m http.server 3000"
+    "sync-inventory": "node scripts/sync-inventory.js"
   },
-  "keywords": ["shopify", "function", "validation", "quantity"],
-  "author": "",
-  "license": "MIT",
-  "devDependencies": {
-    "@shopify/cli": "^3.0.0"
-  }
+  "dependencies": {
+    "@shopify/cli": "3.72.1",
+    "node-cron": "^3.0.3",
+    "node-fetch": "^3.3.2"
+  },
+  "devDependencies": {},
+  "workspaces": [
+    "extensions/*"
+  ]
 }

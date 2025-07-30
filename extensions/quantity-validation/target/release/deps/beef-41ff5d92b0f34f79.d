@@ -1,0 +1,11 @@
+/Users/ziaddarwich/Sites/retailogists/quantity-validation-app/extensions/quantity-validation/target/release/deps/beef-41ff5d92b0f34f79.d: /Users/ziaddarwich/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/beef-0.5.2/src/lib.rs /Users/ziaddarwich/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/beef-0.5.2/src/traits.rs /Users/ziaddarwich/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/beef-0.5.2/src/wide.rs /Users/ziaddarwich/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/beef-0.5.2/src/generic.rs /Users/ziaddarwich/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/beef-0.5.2/src/lean.rs
+
+/Users/ziaddarwich/Sites/retailogists/quantity-validation-app/extensions/quantity-validation/target/release/deps/libbeef-41ff5d92b0f34f79.rlib: /Users/ziaddarwich/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/beef-0.5.2/src/lib.rs /Users/ziaddarwich/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/beef-0.5.2/src/traits.rs /Users/ziaddarwich/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/beef-0.5.2/src/wide.rs /Users/ziaddarwich/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/beef-0.5.2/src/generic.rs /Users/ziaddarwich/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/beef-0.5.2/src/lean.rs
+
+/Users/ziaddarwich/Sites/retailogists/quantity-validation-app/extensions/quantity-validation/target/release/deps/libbeef-41ff5d92b0f34f79.rmeta: /Users/ziaddarwich/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/beef-0.5.2/src/lib.rs /Users/ziaddarwich/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/beef-0.5.2/src/traits.rs /Users/ziaddarwich/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/beef-0.5.2/src/wide.rs /Users/ziaddarwich/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/beef-0.5.2/src/generic.rs /Users/ziaddarwich/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/beef-0.5.2/src/lean.rs
+
+/Users/ziaddarwich/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/beef-0.5.2/src/lib.rs:
+/Users/ziaddarwich/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/beef-0.5.2/src/traits.rs:
+/Users/ziaddarwich/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/beef-0.5.2/src/wide.rs:
+/Users/ziaddarwich/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/beef-0.5.2/src/generic.rs:
+/Users/ziaddarwich/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/beef-0.5.2/src/lean.rs:

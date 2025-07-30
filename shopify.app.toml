@@ -1,25 +1,27 @@
-# This file stores configuration for your Shopify app.
+# Learn more about configuring your app at https://shopify.dev/docs/apps/tools/cli/configuration
 
 client_id = "6d06fe10e07175aeba07d7225e48f3b1"
 name = "quantity-validation-app"
-application_url = "https://your-app-name.netlify.app"
+application_url = "https://testb2brl.myshopify.com/admin/oauth/redirect_from_cli?client_id=6d06fe10e07175aeba07d7225e48f3b1"
 embedded = true
 
 [build]
 automatically_update_urls_on_dev = true
 include_config_on_deploy = true
+dev_store_url = "testb2brl.myshopify.com"
+
+[webhooks]
+api_version = "2023-10"
 
 [access_scopes]
-scopes = "write_products,read_products"
+# Required scopes for automated inventory validation with metafields
+scopes = "write_discounts,read_products,write_products"
 use_legacy_install_flow = false
 
 [auth]
 redirect_urls = [
-  "https://your-app-name.netlify.app/auth/callback"
+  "https://testb2brl.myshopify.com/admin/oauth/redirect_from_cli?client_id=6d06fe10e07175aeba07d7225e48f3b1"
 ]
-
-[webhooks]
-api_version = "2025-07"
 
 [pos]
 embedded = false
