@@ -33,6 +33,11 @@ export const handler = async (event, context) => {
     });
 
     const tokenData = await tokenResponse.json();
+    console.log('🔍 DEBUG: Token response:', { 
+      hasAccessToken: !!tokenData.access_token, 
+      tokenLength: tokenData.access_token ? tokenData.access_token.length : 0,
+      shop 
+    });
     
     if (tokenData.access_token) {
       // Store access token (in production, store in database)
@@ -41,6 +46,9 @@ export const handler = async (event, context) => {
       // Redirect to app interface with access token (base64 encoded for security)
       const tokenParam = Buffer.from(tokenData.access_token).toString('base64');
       const redirectUrl = `/?shop=${shop}${host ? `&host=${host}` : ''}&token=${tokenParam}`;
+      
+      console.log('🔍 DEBUG: Redirect URL:', redirectUrl);
+      console.log('🔍 DEBUG: Token param length:', tokenParam.length);
       
       return {
         statusCode: 302,

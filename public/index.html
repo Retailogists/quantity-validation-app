@@ -188,7 +188,10 @@
             document.getElementById('threshold-config').style.display = 'block';
             console.log('🔍 DEBUG: Threshold config section should now be visible');
             
-            // Initialize App Bridge for embedded app
+            // Always setup threshold configuration, regardless of App Bridge
+            setupThresholdConfig(shop, null, tokenParam);
+            
+            // Initialize App Bridge for embedded app (optional)
             if (window.shopifyAppBridge && host) {
                 try {
                     const app = shopifyAppBridge.createApp({
@@ -197,12 +200,11 @@
                         forceRedirect: true,
                     });
                     console.log('App Bridge initialized for shop:', shop);
-                    
-                    // Handle threshold configuration
-                    setupThresholdConfig(shop, app, tokenParam);
                 } catch (error) {
                     console.error('App Bridge initialization failed:', error);
                 }
+            } else {
+                console.log('🔍 DEBUG: App Bridge not available or no host, but threshold config still setup');
             }
         } else {
             // Show installation instructions for direct access
@@ -259,8 +261,28 @@
                     // Check if we have an access token
                     console.log('🔍 DEBUG: Checking token param:', tokenParam ? `Present (${tokenParam.length} chars)` : 'Missing');
                     if (!tokenParam) {
-                        console.log('🔍 DEBUG: No token found, showing error');
-                        showStatus('No access token found. Please reinstall the app to configure settings.', 'error');
+                        console.log('🔍 DEBUG: No token found, simulating for testing');
+                        showStatus('⚠️ Testing mode: No access token (would normally fail)', 'error');
+                        
+                        // For debugging, let's simulate the API call anyway
+                        console.log('🔍 DEBUG: Making test API call without real token...');
+                        
+                        const testResponse = await fetch('/debug-threshold', {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json',
+                            },
+                            body: JSON.stringify({
+                                shop: shop,
+                                threshold: threshold,
+                                accessToken: 'test_token_for_debugging'
+                            })
+                        });
+                        
+                        console.log('🔍 DEBUG: Test response:', testResponse.status);
+                        const testResult = await testResponse.text();
+                        console.log('🔍 DEBUG: Test response body:', testResult);
+                        
                         saveButton.disabled = false;
                         saveButton.textContent = 'Save Threshold';
                         return;
