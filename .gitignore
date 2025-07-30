@@ -17,3 +17,7 @@ Thumbs.db
 
 # Shopify CLI files
 .shopify/ 
+node_modules
+
+# Local Netlify folder
+.netlify

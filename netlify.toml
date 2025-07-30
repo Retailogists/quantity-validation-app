@@ -1,15 +1,43 @@
 [build]
   publish = "public"
-  command = "echo 'Static site ready'"
+  functions = "netlify/functions"
+  command = "echo 'Static site with functions ready'"
 
 [build.environment]
   NODE_VERSION = "18"
 
+# Netlify Functions
+[functions]
+  node_bundler = "esbuild"
+
+# Redirects for OAuth and API routes
 [[redirects]]
-  from = "/auth/callback"
-  to = "/auth/callback.html"
+  from = "/auth"
+  to = "/.netlify/functions/auth"
   status = 200
 
+[[redirects]]
+  from = "/auth/callback"
+  to = "/.netlify/functions/callback"
+  status = 200
+
+[[redirects]]
+  from = "/api/*"
+  to = "/.netlify/functions/:splat"
+  status = 200
+
+[[redirects]]
+  from = "/health"
+  to = "/.netlify/functions/health"
+  status = 200
+
+# Main app route
+[[redirects]]
+  from = "/"
+  to = "/index.html"
+  status = 200
+
+# Fallback for SPA
 [[redirects]]
   from = "/*"
   to = "/index.html"

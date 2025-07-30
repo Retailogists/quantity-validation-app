@@ -3,21 +3,24 @@
   "version": "1.0.0",
   "type": "module",
   "scripts": {
-    "setup": "node scripts/setup.js",
-    "setup-metafields": "node scripts/setup-metafields.js",
     "build": "shopify app build",
     "dev": "shopify app dev",
     "info": "shopify app info",
-    "scaffold": "shopify app scaffold",
     "deploy": "shopify app deploy",
-    "sync-inventory": "node scripts/sync-inventory.js"
+    "setup": "node scripts/setup.js",
+    "setup-metafields": "node scripts/setup-metafields.js",
+    "sync-inventory": "node scripts/sync-inventory.js",
+    "netlify:dev": "netlify dev",
+    "netlify:build": "echo 'Netlify build complete'"
   },
   "dependencies": {
     "@shopify/cli": "3.72.1",
     "node-cron": "^3.0.3",
     "node-fetch": "^3.3.2"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "netlify-cli": "^17.0.0"
+  },
   "workspaces": [
     "extensions/*"
   ]

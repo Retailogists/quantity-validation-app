@@ -2,7 +2,7 @@
 
 client_id = "6d06fe10e07175aeba07d7225e48f3b1"
 name = "quantity-validation-app"
-application_url = "https://testb2brl.myshopify.com/admin/oauth/redirect_from_cli?client_id=6d06fe10e07175aeba07d7225e48f3b1"
+application_url = "https://quanvalapp.netlify.app"
 embedded = true
 
 [build]
@@ -20,7 +20,7 @@ use_legacy_install_flow = false
 
 [auth]
 redirect_urls = [
-  "https://testb2brl.myshopify.com/admin/oauth/redirect_from_cli?client_id=6d06fe10e07175aeba07d7225e48f3b1"
+  "https://quanvalapp.netlify.app/auth/callback"
 ]
 
 [pos]
